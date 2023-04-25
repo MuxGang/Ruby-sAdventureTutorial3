@@ -54,7 +54,7 @@ public class BotFixCount : MonoBehaviour
         }
         if(level==2)
         {
-            countText.text = "Bots Fixed: " + fixCount.ToString() + "/4";
+            countText.text = "Bots Fixed: " + fixCount.ToString() + "/6";
 
         }
         if ((fixCount==4)&&(level==1))

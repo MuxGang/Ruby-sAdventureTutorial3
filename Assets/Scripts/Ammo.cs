@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class Ammo : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
+    public int reload =4;
+    public RubyController player;
+    public GameObject particle;
 
-    void Update()
+    void TriggerEnter2D(Collider2D other)
     {
+        if(other.CompareTag("Player"))
+        {
+            player.ammoCount += reload;
+            Destroy(gameObject);
+        }
         
-    }
-
-    void OnCollisionStay2D(Collision2D other)
-    {
-        RubyController controller = other.collider.GetComponent<RubyController>();
+        
+        /*RubyController controller = other.GetComponent<RubyController>();
 
         if (controller != null)
-            controller.ammoCount+=4;
+        {
+            controller.ammoCount += 4;
+            Destroy(gameObject);
+        }*/
     }
 }

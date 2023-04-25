@@ -159,7 +159,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300010, guid: 651c4abeb0812e74685da0e5a31c8dff, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -233,6 +233,7 @@ MonoBehaviour:
   speed: 2
   timeToChange: 2
   horizontal: 1
+  vertical: 0
   smokeParticleEffect: {fileID: 1567602971405039469}
   fixedParticleEffect: {fileID: 2688776450615711917, guid: 96e9cd9955be74842b5d6b2e427ffe16,
     type: 3}

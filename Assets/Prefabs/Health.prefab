@@ -182,6 +182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthParticle: {fileID: 6311689105567423329, guid: 8f76c3b1492459e45a717db2324c2e84,
     type: 3}
+  healSound: {fileID: 8300000, guid: 173a14cf06354c643b46b235f2a4f974, type: 3}
 --- !u!61 &1305409946501154268
 BoxCollider2D:
   m_ObjectHideFlags: 0

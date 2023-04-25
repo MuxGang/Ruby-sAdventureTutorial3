@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 5818520075753517181}
   - component: {fileID: 4210308331536613658}
   - component: {fileID: -502972682400851011}
-  - component: {fileID: 569064165}
-  m_Layer: 30
+  m_Layer: 0
   m_Name: CollectibleAmmo
   m_TagString: Ammo
   m_Icon: {fileID: 0}
@@ -72,7 +71,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 347a7985e94a0f641932a61715620794, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -110,15 +109,3 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.96, y: 1.76}
   m_EdgeRadius: 0
---- !u!114 &569064165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6158346949209470037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c12ba4d627639dc40978deeee6f9b367, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

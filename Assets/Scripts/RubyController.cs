@@ -6,7 +6,7 @@ using TMPro;
 
 public class RubyController : MonoBehaviour
 {
-    public float speed = 4;
+    public float speed = 4f;
 
     public static bool dead;
     public int maxHealth = 5;
@@ -18,6 +18,8 @@ public class RubyController : MonoBehaviour
 
     public AudioClip hitSound;
     public AudioClip shootingSound;
+    public AudioClip reloadSound;
+    public AudioClip croakSound;
     
     public int health
     {
@@ -34,17 +36,20 @@ public class RubyController : MonoBehaviour
 
     public TextMeshProUGUI ammoText;
     public int ammoCount;
-    //public GameObject ammoPack;
+   // public GameObject ammoPack;
 
-    // public int ammo;
-    //public int levelNumber = BotFixCount.level;
-    // public TextMeshProUGUI bulletCount;
+    public int ammo;
+    public int levelNumber = BotFixCount.level;
+     public TextMeshProUGUI bulletCount;
 
 
     Animator animator;
     Vector2 lookDirection = new Vector2(1, 0);
     
     AudioSource audioSource;
+
+    private bool isSlow = false;
+    private bool slowedDown = false;
     
     void Start()
     {
@@ -65,7 +70,7 @@ public class RubyController : MonoBehaviour
 
         //bulletCount = GetComponent<TextMeshProUGUI>;
 
-        /*if (BotFixCount.level == 1)
+         if (BotFixCount.level == 1)
         {
             ammo = 4;
             bulletCount.text = "Ammo: " + ammo.ToString();
@@ -75,7 +80,7 @@ public class RubyController : MonoBehaviour
             ammo = 6;
             bulletCount.text = "Ammo: " + ammo.ToString();
             Debug.Log("Working");
-        }*/
+        }
     }
 
     void Update()
@@ -86,6 +91,8 @@ public class RubyController : MonoBehaviour
             if (invincibleTimer < 0)
                 isInvincible = false;
         }
+
+       
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -118,6 +125,7 @@ public class RubyController : MonoBehaviour
                 NonPlayerCharacter character = hit.collider.GetComponent<NonPlayerCharacter>();
                 if (character != null)
                 {
+                    PlaySound(croakSound);
                     character.DisplayDialog();
                     if (BotFixCount.continueActive == true)
                     {
@@ -144,12 +152,25 @@ public class RubyController : MonoBehaviour
                 Respawn();
             }
         }
+
+        if(isSlow && !slowedDown)               //slowing down and normalizing the player
+        {
+            speed *= .5f;
+            slowedDown = true;
+        }
+        else if(!isSlow && slowedDown)
+        {
+            speed *= 2f;
+            slowedDown = false;
+        }
  
     }
 
     void FixedUpdate()
     {
         Vector2 position = rigidbody2d.position;
+
+        
         
         position = position + currentInput * speed * Time.deltaTime;
         
@@ -193,11 +214,9 @@ public class RubyController : MonoBehaviour
     }
     
     void LaunchProjectile()
-    {//============================================================================================================================
-        //checks to see if ruby has the required ammo. Am commenting for now in order to pass off challenge 3, un-comment on final.
-        //============================================================================================================================
-        //if (ammoCount >= 1)
-      //  {
+    {
+        if (ammoCount >= 1)
+       {
             GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2d.position + Vector2.up * 0.5f, Quaternion.identity);
 
             Projectile projectile = projectileObject.GetComponent<Projectile>();
@@ -205,13 +224,13 @@ public class RubyController : MonoBehaviour
 
             animator.SetTrigger("Launch");
             audioSource.PlayOneShot(shootingSound);
-           // ammoCount -= 1;
-       // }
-       // else if(ammoCount<=0)
-      //  {
-      //      return;
-      //  }
-       // ammoText.text = "Ammo: " + ammoCount.ToString();
+            ammoCount -= 1;
+        }
+        else if(ammoCount<=0)
+        {
+            return;
+        }
+        ammoText.text = "Ammo: " + ammoCount.ToString();
             
     }
     
@@ -225,6 +244,44 @@ public class RubyController : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Ammo"))
+        {
+            ammoCount += 4;
+            ammoText.text = "Ammo: " + ammoCount.ToString();
+            PlaySound(reloadSound);
+            Destroy(other.gameObject);
+        }
+
+        if(other.gameObject.CompareTag("Slowzone"))
+        {
+            isSlow = true;
+           
+        }
+
+        if(other.CompareTag("Powerup"))
+        {
+            speed *= 1.25f;
+
+            GameObject powerupObject = GameObject.FindWithTag("Powerup");
+
+            if (powerupObject != null)
+            {
+                Destroy(powerupObject);
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Slowzone"))
+        {
+            isSlow = false;
+          
+        }
     }
 
     
